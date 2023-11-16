@@ -28,11 +28,14 @@ func main() {
 			defer wg.Done()
 			switch *hash {
 			case "ntlm":
-				u16 := make([]byte, 4096)
+				u16 := make([]byte, 16)
 				mdfour := md4.New()
 				for password := range queue {
 					/* Add all bytes, as well as the 0x00 of UTF-16 */
 					utf16encoded := utf16.Encode([]rune(password))
+					if cap(u16) < len(utf16encoded)*2 {
+						u16 = make([]byte, len(utf16encoded)*2)
+					}
 					u16 = u16[:len(utf16encoded)*2]
 					for i, b := range utf16encoded {
 						u16[i*2] = byte(b)
