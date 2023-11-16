@@ -80,6 +80,7 @@ func main() {
 	output := bufio.NewWriter(writeto)
 	defer output.Flush()
 
+	consumerWait.Add(1)
 	go func() {
 		defer consumerWait.Done()
 		var sb strings.Builder
