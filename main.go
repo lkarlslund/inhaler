@@ -87,9 +87,9 @@ func main() {
 		for hashed := range hashedqueue {
 			sb.Reset()
 			sb.Grow(len(hashed.password) + len(hashed.hash) + 2)
-			sb.WriteString(hashed.password)
-			sb.WriteString(":")
 			sb.WriteString(hashed.hash)
+			sb.WriteString(":")
+			sb.WriteString(hashed.password)
 			sb.WriteString("\n")
 			_, err := output.WriteString(sb.String())
 			if err != nil {
